@@ -1,0 +1,31 @@
+{
+  "name": "drippy",
+  "version": "0.1.0",
+  "bin": {
+    "drippy": "./dist/index.js"
+  },
+  "description": "Micro-framework for creating static sites using liquid and markdown",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "prepare": "npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^22.10.5",
+    "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "commander": "^13.0.0",
+    "liquidjs": "^10.20.1",
+    "marked": "^15.0.6",
+    "prettier": "^3.4.2"
+  }
+}
