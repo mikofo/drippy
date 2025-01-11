@@ -29,4 +29,35 @@ program
     }
   });
 
+program
+  .command("help")
+  .description("Display detailed usage information")
+  .action(() => {
+    console.log(
+      `
+Drippy - Static Site Generator
+
+Usage:
+  drippy <command> [options]
+
+Commands:
+  build         Compile project to static HTML
+  help          Display this help message
+
+Configuration:
+  Drippy looks for a 'drippy.config.js' or 'drippy.config.json' file in your project root.
+  
+Example config:
+  {
+    "input": "./src",
+    "output": "./dist",
+    "layouts": "./layouts",
+    "assets": "./assets"
+  }
+
+For more information, visit: https://github.com/your-repo/drippy
+    `.trim()
+    );
+  });
+
 program.parse();

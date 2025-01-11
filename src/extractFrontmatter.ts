@@ -1,14 +1,5 @@
-const fs = require("fs");
-
-export interface Frontmatter {
-  [key: string]: string;
-}
-
-export interface ParseResult {
-  frontmatter: Frontmatter;
-  content: string;
-  fullPath: string;
-}
+import type { Frontmatter, ParseResult } from "./types";
+import fs from "fs";
 
 function extractFrontmatter(path: string): ParseResult {
   const fileContent = fs.readFileSync(path, "utf8");

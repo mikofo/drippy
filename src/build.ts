@@ -1,12 +1,9 @@
 import fs from "fs";
-import { Liquid } from "liquidjs";
-import { DrippyConfig } from "./types";
 import path from "path";
-import extractFrontmatter, { Frontmatter } from "./extractFrontmatter";
-import { marked } from "marked";
-import { mkdir } from "./fsHelpers";
-import { getConfig } from "./config";
-import prettier from "prettier";
+import type { DrippyConfig, Frontmatter } from "./types";
+import extractFrontmatter from "./extractFrontmatter";
+import generateHtml from "./generateHtml";
+import processMarkdownFile from "./processMarkdownFile";
 
 export function build(config: DrippyConfig) {
   const collections: { [key: string]: Frontmatter[] } = {};
@@ -63,52 +60,4 @@ function parseCollectionContent(dir: string): Frontmatter[] {
     });
 
   return frontmatters;
-}
-
-function processMarkdownFile(
-  fullPath: string,
-  content: string,
-  variables: any = {}
-): void {
-  const config = getConfig();
-
-  if (!variables.template) {
-    throw new Error(`Template is missing from ${fullPath}`);
-  }
-
-  const template = fs.readFileSync(
-    path.join(config.templatesPath, variables.template + ".liquid"),
-    "utf8"
-  );
-
-  generateHtml(fullPath, template, {
-    ...variables,
-    content: marked(content),
-  });
-}
-
-async function generateHtml(
-  fullPath: string,
-  content: string,
-  variables: any = {}
-) {
-  const engine = new Liquid();
-  const config = getConfig();
-
-  const outputFile = path.join(
-    config.buildPath,
-    path
-      .relative(config.sourcePath, fullPath)
-      .replace(".liquid", ".html")
-      .replace(".md", ".html")
-  );
-
-  const html = await engine.parseAndRender(content, variables);
-  mkdir(path.dirname(outputFile));
-  const formattedHtml = await prettier.format(html, {
-    parser: "html",
-    printWidth: 120,
-    htmlWhitespaceSensitivity: "css",
-  });
-  fs.writeFileSync(outputFile, formattedHtml);
 }
