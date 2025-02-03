@@ -1,6 +1,6 @@
 {
-  "name": "drippy",
-  "version": "0.1.0",
+  "name": "drippy-liquid",
+  "version": "0.1.4",
   "bin": {
     "drippy": "./dist/index.js"
   },
@@ -27,5 +27,13 @@
     "liquidjs": "^10.20.1",
     "marked": "^15.0.6",
     "prettier": "^3.4.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mikofo/drippy.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mikofo/drippy/issues"
+  },
+  "homepage": "https://github.com/mikofo/drippy#readme"
 }

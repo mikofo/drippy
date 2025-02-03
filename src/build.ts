@@ -4,6 +4,8 @@ import type { DrippyConfig, Frontmatter } from "./types";
 import extractFrontmatter from "./extractFrontmatter";
 import generateHtml from "./generateHtml";
 import processMarkdownFile from "./processMarkdownFile";
+import { getConfig } from "./config";
+import { getPathname } from "./fsHelpers";
 
 export function build(config: DrippyConfig) {
   const collections: { [key: string]: Frontmatter[] } = {};
@@ -35,7 +37,10 @@ function processIndexFile(
   const indexPath = path.join(dirPath, "index.liquid");
   if (fs.existsSync(indexPath)) {
     const content = fs.readFileSync(indexPath, "utf8");
-    generateHtml(indexPath, content, collections);
+    generateHtml(indexPath, content, {
+      ...collections,
+      pathname: getPathname(dirPath),
+    });
   }
 }
 
@@ -48,15 +53,20 @@ function parseCollectionContent(dir: string): Frontmatter[] {
         path.join(dir, entry.name)
       );
 
+      const fm = {
+        ...frontmatter,
+        pathname: getPathname(path.join(dir, entry.name)),
+      };
+
       if (entry.name.endsWith(".liquid")) {
-        generateHtml(fullPath, content, frontmatter);
+        generateHtml(fullPath, content, fm);
       }
 
       if (entry.name.endsWith(".md")) {
-        processMarkdownFile(fullPath, content, frontmatter);
+        processMarkdownFile(fullPath, content, fm);
       }
 
-      return frontmatter;
+      return fm;
     });
 
   return frontmatters;

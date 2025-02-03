@@ -1,4 +1,6 @@
 import * as fs from "fs";
+import { getConfig } from "./config";
+import path from "path";
 
 function mkdir(dirPath: string): void {
   if (!fs.existsSync(dirPath)) {
@@ -12,4 +14,9 @@ function rmdir(dirPath: string): void {
   }
 }
 
-export { mkdir, rmdir };
+function getPathname(dirPath: string): string {
+  const relativePath = path.relative(getConfig().sourcePath, dirPath);
+  return relativePath ? `/${relativePath}` : "/";
+}
+
+export { mkdir, rmdir, getPathname };
