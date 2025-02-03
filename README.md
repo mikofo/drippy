@@ -7,7 +7,7 @@ Perfect for building blog-aware websites you can leverage the flexibility and co
 ## Installation
 
 ```bash
-npm install drippy
+npm install drippy-liquid
 ```
 
 ## Getting Started
@@ -26,9 +26,8 @@ Example config:
 
 ```js
 {
-  "input": "./src",
-  "output": "./dist",
-  "layouts": "./layouts",
-  "assets": "./assets"
+  "sourcePath": "src/pages",
+  "templatesPath": "src/templates"
 }
+
 ```
