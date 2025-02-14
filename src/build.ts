@@ -55,7 +55,9 @@ function parseCollectionContent(dir: string): Frontmatter[] {
 
       const fm = {
         ...frontmatter,
-        pathname: getPathname(path.join(dir, entry.name)),
+        pathname: getPathname(path.join(dir, entry.name))
+          .replace(".liquid", "")
+          .replace(".md", ""),
       };
 
       if (entry.name.endsWith(".liquid")) {
@@ -69,5 +71,12 @@ function parseCollectionContent(dir: string): Frontmatter[] {
       return fm;
     });
 
+  // Write collection data to JSON file for debugging and reference
+  const outputDir = path.dirname(dir);
+  fs.mkdirSync(outputDir, { recursive: true });
+  fs.writeFileSync(
+    path.join(outputDir, "frontmatter.json"),
+    JSON.stringify(frontmatters, null, 2)
+  );
   return frontmatters;
 }
