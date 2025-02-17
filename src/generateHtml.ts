@@ -1,7 +1,7 @@
 import fs from "fs";
 import { Liquid } from "liquidjs";
 import path from "path";
-import { mkdir } from "./fsHelpers";
+import { mkdir } from "./utils/fsHelpers";
 import { getConfig } from "./config";
 import prettier from "prettier";
 

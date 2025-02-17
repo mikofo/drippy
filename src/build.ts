@@ -4,12 +4,20 @@ import type { DrippyConfig, Frontmatter } from "./types";
 import extractFrontmatter from "./extractFrontmatter";
 import generateHtml from "./generateHtml";
 import processMarkdownFile from "./processMarkdownFile";
-import { getConfig } from "./config";
-import { getPathname } from "./fsHelpers";
+import { getPathname, rmdir } from "./utils/fsHelpers";
+import { snakeCased } from "./utils/snakeCased";
 
 export function build(config: DrippyConfig) {
   const collections: { [key: string]: Frontmatter[] } = {};
   const entries = fs.readdirSync(config.sourcePath, { withFileTypes: true });
+  rmdir(config.buildPath);
+
+  // Copy assets to public folder
+  fs.cpSync(
+    path.join(config.sourcePath, "assets"),
+    path.join(config.publicPath, "assets"),
+    { recursive: true }
+  );
 
   // First pass: gather all collections
   for (const entry of entries) {
@@ -55,9 +63,10 @@ function parseCollectionContent(dir: string): Frontmatter[] {
 
       const fm = {
         ...frontmatter,
-        pathname: getPathname(path.join(dir, entry.name))
-          .replace(".liquid", "")
-          .replace(".md", ""),
+        pathname:
+          getPathname(path.join(dir, snakeCased(entry.name)))
+            .replace(".liquid", "")
+            .replace(".md", "") + ".html",
       };
 
       if (entry.name.endsWith(".liquid")) {

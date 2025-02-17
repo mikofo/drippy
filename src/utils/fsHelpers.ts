@@ -1,5 +1,5 @@
 import * as fs from "fs";
-import { getConfig } from "./config";
+import { getConfig } from "../config";
 import path from "path";
 
 function mkdir(dirPath: string): void {
