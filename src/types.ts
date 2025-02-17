@@ -2,7 +2,7 @@ export interface DrippyConfig {
   buildPath: string;
   templatesPath: string;
   sourcePath: string;
-  publicPath: string;
+  pagesPath: string;
 }
 
 export interface Frontmatter {

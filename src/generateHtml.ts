@@ -16,7 +16,7 @@ async function generateHtml(
   const outputFile = path.join(
     config.buildPath,
     path
-      .relative(config.sourcePath, fullPath)
+      .relative(config.pagesPath, fullPath)
       .replace(".liquid", ".html")
       .replace(".md", ".html")
   );

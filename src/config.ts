@@ -4,9 +4,9 @@ import { DrippyConfig } from "./types";
 
 export const defaultConfig = {
   buildPath: path.join(process.cwd(), "build"),
-  templatesPath: path.join(process.cwd(), "templates"),
-  sourcePath: path.join(process.cwd(), "pages"),
-  publicPath: path.join(process.cwd(), "public"),
+  templatesPath: path.join(process.cwd(), "src/templates"),
+  sourcePath: path.join(process.cwd(), "src"),
+  pagesPath: path.join(process.cwd(), "src/pages"),
 };
 
 export function getConfig(): DrippyConfig {

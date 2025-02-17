@@ -15,7 +15,7 @@ function rmdir(dirPath: string): void {
 }
 
 function getPathname(dirPath: string): string {
-  const relativePath = path.relative(getConfig().sourcePath, dirPath);
+  const relativePath = path.relative(getConfig().pagesPath, dirPath);
   return relativePath ? `/${relativePath}` : "/";
 }
 

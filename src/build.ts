@@ -9,29 +9,29 @@ import { snakeCased } from "./utils/snakeCased";
 
 export function build(config: DrippyConfig) {
   const collections: { [key: string]: Frontmatter[] } = {};
-  const entries = fs.readdirSync(config.sourcePath, { withFileTypes: true });
+  const entries = fs.readdirSync(config.pagesPath, { withFileTypes: true });
   rmdir(config.buildPath);
 
   // Copy assets to public folder
   fs.cpSync(
     path.join(config.sourcePath, "assets"),
-    path.join(config.publicPath, "assets"),
+    path.join(config.buildPath, "assets"),
     { recursive: true }
   );
 
   // First pass: gather all collections
   for (const entry of entries) {
-    const fullPath = path.join(config.sourcePath, entry.name);
-    const relativePath = path.relative(config.sourcePath, fullPath);
+    const fullPath = path.join(config.pagesPath, entry.name);
+    const relativePath = path.relative(config.pagesPath, fullPath);
     if (entry.isDirectory()) {
       collections[relativePath] = parseCollectionContent(fullPath);
     }
   }
 
   // Second pass: process index files
-  processIndexFile(config.sourcePath, collections); // Process root index file
+  processIndexFile(config.pagesPath, collections); // Process root index file
   for (const entry of entries) {
-    const fullPath = path.join(config.sourcePath, entry.name);
+    const fullPath = path.join(config.pagesPath, entry.name);
     if (entry.isDirectory()) {
       processIndexFile(fullPath, collections);
     }
