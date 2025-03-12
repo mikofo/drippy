@@ -43,6 +43,7 @@ function processIndexFile(
   collections: { [key: string]: Frontmatter[] }
 ) {
   const indexPath = path.join(dirPath, "index.liquid");
+  console.log("indexPath", indexPath);
   if (fs.existsSync(indexPath)) {
     const content = fs.readFileSync(indexPath, "utf8");
     generateHtml(indexPath, content, {
@@ -52,7 +53,7 @@ function processIndexFile(
   }
 }
 
-function parseCollectionContent(dir: string): Frontmatter[] {
+export function parseCollectionContent(dir: string): Frontmatter[] {
   const entries = fs.readdirSync(dir, { withFileTypes: true });
   const frontmatters = entries
     .filter((entry) => entry.isFile() && !entry.name.startsWith("index."))

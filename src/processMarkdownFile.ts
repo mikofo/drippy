@@ -1,16 +1,16 @@
-import fs from "fs";
+import fs from "node:fs";
 import path from "path";
 import { marked } from "marked";
 import { getConfig } from "./config";
 import generateHtml from "./generateHtml";
+import type { DrippyConfig } from "./types";
 
 function processMarkdownFile(
   fullPath: string,
   content: string,
-  variables: any = {}
+  variables: any = {},
+  config: DrippyConfig = getConfig()
 ): void {
-  const config = getConfig();
-
   if (!variables.template) {
     throw new Error(`Template is missing from ${fullPath}`);
   }
@@ -20,10 +20,15 @@ function processMarkdownFile(
     "utf8"
   );
 
-  generateHtml(fullPath, template, {
-    ...variables,
-    content: marked(content),
-  });
+  generateHtml(
+    fullPath,
+    template,
+    {
+      ...variables,
+      content: marked(content),
+    },
+    config
+  );
 }
 
 export default processMarkdownFile;

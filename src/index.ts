@@ -3,6 +3,7 @@
 import { Command } from "commander";
 import { build } from "./build";
 import { getConfig } from "./config";
+import { createExample } from "./createExample";
 
 const program = new Command();
 
@@ -25,6 +26,19 @@ program
       build(config);
     } catch (error) {
       console.error("Error during build:", error);
+      process.exit(1);
+    }
+  });
+
+program
+  .command("example")
+  .description("Create an example project")
+  .action(async () => {
+    console.log("Creating example project");
+    try {
+      await createExample();
+    } catch (error) {
+      console.error("Error creating example project:", error);
       process.exit(1);
     }
   });
