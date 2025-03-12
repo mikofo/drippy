@@ -20,9 +20,10 @@
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^22.10.5",
+    "@vitest/coverage-v8": "^3.0.8",
     "memfs": "^4.17.0",
     "typescript": "^5.7.2",
-    "vitest": "^1.4.0"
+    "vitest": "^3.0.8"
   },
   "dependencies": {
     "commander": "^13.0.0",
