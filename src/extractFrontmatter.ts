@@ -1,5 +1,5 @@
 import type { Frontmatter, ParseResult } from "./types";
-import fs from "fs";
+import fs from "node:fs";
 
 function extractFrontmatter(path: string): ParseResult {
   const fileContent = fs.readFileSync(path, "utf8");

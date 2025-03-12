@@ -1,17 +1,18 @@
-import fs from "fs";
+import fs from "node:fs";
 import { Liquid } from "liquidjs";
 import path from "path";
 import { mkdir } from "./utils/fsHelpers";
 import { getConfig } from "./config";
 import prettier from "prettier";
+import type { DrippyConfig } from "./types";
 
 async function generateHtml(
   fullPath: string,
   content: string,
-  variables: any = {}
+  variables: any = {},
+  config: DrippyConfig = getConfig()
 ) {
   const engine = new Liquid();
-  const config = getConfig();
 
   const outputFile = path.join(
     config.buildPath,
